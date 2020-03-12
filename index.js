@@ -76,24 +76,29 @@ server.get('/users/:id', (req, res) => {
 // handler for POST '/users'
 //
 server.post('/users', (req, res) => {
-    // get the new user info from the request body
-    const userInfo = req.body;
+    try {
+        // get the new user info from the request body
+        const userInfo = req.body;
 
-    if (!userInfo.name || !userInfo.bio) {
+        if (!userInfo.name || !userInfo.bio) {
+            res
+                .status(404)
+                .json({ success: false, message: "Please provide a name and bio for the user." })
+        } else {
+            // creates a user id using shortid
+            userInfo.id = shortid.generate();
+
+            // push the new user onto users array
+            users.push(userInfo);
+
+            // send back updated users
+            res.status(201).json(users);
+        }
+    } catch (error) {
         res
-            .status(404)
-            .json({ success: false, message: "Please provide name and bio for the user." })
-    } else {
-        // creates a user id using shortid
-        userInfo.id = shortid.generate();
-
-        // push the new user onto users array
-        users.push(userInfo);
-
-        // send back updated users
-        res.status(201).json(users);        
+            .status(500)
+            .json({ success: false, message: "There was an internal error while saving the user." });
     }
-
 });
 
 //
@@ -132,25 +137,31 @@ server.put('/users/:id', (req, res) => {
     // get the user changes from the request body
     const changes = req.body;
 
-    // set the user id based off the params
-    changes.id = id;
-
-    // find the user's index in users array
-    let index = users.findIndex(user => user.id === id);
-
-    // if the user is found
-    if (index !== -1) {
-        // set the changes to the user based on the user's index
-        users[index] = changes;
-
-        // send back the edited user
-        res.status(200).json(users[index]);
-
-    // if the user is not found, return a 404 error message
-    } else {
+    if (!changes.name || !changes.bio) {
         res
             .status(404)
-            .json({ success: false, message: "The user with the specified ID does not exist." });
+            .json({ success: false, message: "Please provide a name and bio for the user." })
+    } else {
+        // set the user id based off the params
+        changes.id = id;
+
+        // find the user's index in users array
+        let index = users.findIndex(user => user.id === id);
+
+        // if the user is found
+        if (index !== -1) {
+            // set the changes to the user based on the user's index
+            users[index] = changes;
+
+            // send back the edited user
+            res.status(200).json(users[index]);
+
+        // if the user is not found, return a 404 error message
+        } else {
+            res
+                .status(404)
+                .json({ success: false, message: "The user with the specified ID does not exist." });
+        }
     }
 });
 
