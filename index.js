@@ -44,9 +44,32 @@ server.get('/', (req, res) => {
 
 //
 // handler for GET '/users'
+// returns all users
 //
 server.get('/users', (req, res) => {
     res.server(200).json(users);
+});
+
+//
+// handler for GET '/users/:id'
+// returns a specific user based on id
+//
+server.get('/users/:id', (req, res) => {
+    // get the user id from the request body
+    const { id } = req.params;
+    
+    const found = users.find(user => user.id === id);
+
+    // if the user is found based on id, return the user
+    if (found) {
+        res.status(200).json(found);
+
+    // if the user isn't found, return a 404 error message
+    } else {
+        res
+            .status(404)
+            .json({ success: false, message: 'user not found'});
+    }
 });
 
 //
@@ -146,26 +169,5 @@ server.patch('/users/:id', (req, res) => {
         res
             .status(404)
             .json({ success: false, message: "user id not found" })   
-    }
-});
-
-//
-// handler for GET '/users/:id'
-//
-server.get('/users/:id', (req, res) => {
-    // get the user id from the request body
-    const { id } = req.params;
-    
-    const found = users.find(user => user.id === id);
-
-    // if the user is found based on id, return the user
-    if (found) {
-        res.status(200).json(found);
-
-    // if the user isn't found, return a 404 error message
-    } else {
-        res
-            .status(404)
-            .json({ success: false, message: 'user not found'});
     }
 });
