@@ -82,7 +82,7 @@ server.post('/users', (req, res) => {
 
         if (!userInfo.name || !userInfo.bio) {
             res
-                .status(404)
+                .status(400)
                 .json({ success: false, message: "Please provide a name and bio for the user." })
         } else {
             // creates a user id using shortid
@@ -139,7 +139,7 @@ server.put('/users/:id', (req, res) => {
 
     if (!changes.name || !changes.bio) {
         res
-            .status(404)
+            .status(400)
             .json({ success: false, message: "Please provide a name and bio for the user." })
     } else {
         // set the user id based off the params
