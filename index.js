@@ -43,10 +43,17 @@ server.get('/', (req, res) => {
 });
 
 //
+// handler for GET '/api'
+//
+server.get('/api', (req, res) => {
+    res.send('Hello API!');
+});
+
+//
 // handler for GET '/users'
 // returns all users
 //
-server.get('/users', (req, res) => {
+server.get('/api/users', (req, res) => {
     res.status(200).json(users);
 });
 
@@ -54,7 +61,7 @@ server.get('/users', (req, res) => {
 // handler for GET '/users/:id'
 // returns a specific user based on id
 //
-server.get('/users/:id', (req, res) => {
+server.get('/api/users/:id', (req, res) => {
     // get the user id from the request body
     const { id } = req.params;
     
@@ -75,7 +82,7 @@ server.get('/users/:id', (req, res) => {
 //
 // handler for POST '/users'
 //
-server.post('/users', (req, res) => {
+server.post('/api/users', (req, res) => {
     try {
         // get the new user info from the request body
         const userInfo = req.body;
@@ -104,7 +111,7 @@ server.post('/users', (req, res) => {
 //
 // handler for DELETE '/users/:id'
 //
-server.delete('/users/:id', (req, res) => {
+server.delete('/api/users/:id', (req, res) => {
     // get the user id from the request params
     const { id } = req.params;
 
@@ -130,7 +137,7 @@ server.delete('/users/:id', (req, res) => {
 //
 // handler for PUT '/users/:id'
 //
-server.put('/users/:id', (req, res) => {
+server.put('/api/users/:id', (req, res) => {
     // get the user id from the request body
     const { id } = req.params;
 
@@ -168,7 +175,7 @@ server.put('/users/:id', (req, res) => {
 //
 // handler for PATCH '/users/:id'
 //
-server.patch('/users/:id', (req, res) => {
+server.patch('/api/users/:id', (req, res) => {
     // get the user id from the request body
     const { id } = req.params;
 
