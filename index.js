@@ -68,7 +68,7 @@ server.get('/users/:id', (req, res) => {
     } else {
         res
             .status(404)
-            .json({ success: false, message: 'user not found'});
+            .json({ success: false, message: 'The user with the specified ID does not exist.'});
     }
 });
 
@@ -79,14 +79,21 @@ server.post('/users', (req, res) => {
     // get the new user info from the request body
     const userInfo = req.body;
 
-    // creates a user id using shortid
-    userInfo.id = shortid.generate();
+    if (!userInfo.name || !userInfo.bio) {
+        res
+            .status(404)
+            .json({ success: false, message: "Please provide name and bio for the user." })
+    } else {
+        // creates a user id using shortid
+        userInfo.id = shortid.generate();
 
-    // push the new user onto users array
-    users.push(userInfo);
+        // push the new user onto users array
+        users.push(userInfo);
 
-    // send back updated users
-    res.status(201).json(users);
+        // send back updated users
+        res.status(201).json(users);        
+    }
+
 });
 
 //
@@ -111,7 +118,7 @@ server.delete('/users/:id', (req, res) => {
     } else {
         res
             .status(404)
-            .json({ success: false, message: "user id not found" })
+            .json({ success: false, message: "The user with the specified ID does not exist." })
     }
 });
 
@@ -143,7 +150,7 @@ server.put('/users/:id', (req, res) => {
     } else {
         res
             .status(404)
-            .json({ success: false, message: "user id not found" });
+            .json({ success: false, message: "The user with the specified ID does not exist." });
     }
 });
 
@@ -171,6 +178,6 @@ server.patch('/users/:id', (req, res) => {
     } else {
         res
             .status(404)
-            .json({ success: false, message: "user id not found" })   
+            .json({ success: false, message: "The user with the specified ID does not exist." })   
     }
 });
