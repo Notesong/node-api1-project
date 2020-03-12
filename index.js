@@ -47,7 +47,7 @@ server.get('/', (req, res) => {
 // returns all users
 //
 server.get('/users', (req, res) => {
-    res.server(200).json(users);
+    res.status(200).json(users);
 });
 
 //
@@ -124,6 +124,9 @@ server.put('/users/:id', (req, res) => {
 
     // get the user changes from the request body
     const changes = req.body;
+
+    // set the user id based off the params
+    changes.id = id;
 
     // find the user's index in users array
     let index = users.findIndex(user => user.id === id);
