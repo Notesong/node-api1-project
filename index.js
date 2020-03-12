@@ -50,7 +50,7 @@ server.get('/api', (req, res) => {
 });
 
 //
-// handler for GET '/users'
+// handler for GET '/api/users'
 // returns all users
 //
 server.get('/api/users', (req, res) => {
@@ -58,7 +58,7 @@ server.get('/api/users', (req, res) => {
 });
 
 //
-// handler for GET '/users/:id'
+// handler for GET '/api/users/:id'
 // returns a specific user based on id
 //
 server.get('/api/users/:id', (req, res) => {
@@ -80,7 +80,7 @@ server.get('/api/users/:id', (req, res) => {
 });
 
 //
-// handler for POST '/users'
+// handler for POST '/api/users'
 //
 server.post('/api/users', (req, res) => {
     try {
@@ -109,7 +109,7 @@ server.post('/api/users', (req, res) => {
 });
 
 //
-// handler for DELETE '/users/:id'
+// handler for DELETE '/api/users/:id'
 //
 server.delete('/api/users/:id', (req, res) => {
     // get the user id from the request params
@@ -135,7 +135,7 @@ server.delete('/api/users/:id', (req, res) => {
 });
 
 //
-// handler for PUT '/users/:id'
+// handler for PUT '/api/users/:id'
 //
 server.put('/api/users/:id', (req, res) => {
     // get the user id from the request body
@@ -173,7 +173,7 @@ server.put('/api/users/:id', (req, res) => {
 });
 
 //
-// handler for PATCH '/users/:id'
+// handler for PATCH '/api/users/:id'
 //
 server.patch('/api/users/:id', (req, res) => {
     // get the user id from the request body
