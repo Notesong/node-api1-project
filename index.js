@@ -7,7 +7,18 @@ const shortid = require('shortid');
 const server = express();
 
 // data store (replaces a DB)
-let users = [];
+let users = [
+    {
+        id: shortid.generate(),
+        name: "Jane Doe",
+        bio: "Not Tarzan's Wife, another Jane.",
+    },
+    {
+        id: shortid.generate(),
+        name: "John Doe",
+        bio: "I'm just a guy.",
+    }
+];
 
 // set server port for it to listen on
 server.listen(4000, () => {
@@ -150,6 +161,7 @@ server.get('/users/:id', (req, res) => {
     // if the user is found based on id, return the user
     if (found) {
         res.status(200).json(found);
+
     // if the user isn't found, return a 404 error message
     } else {
         res
