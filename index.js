@@ -100,8 +100,10 @@ server.post("/api/users", (req, res) => {
       // push the new user onto users array
       users.push(userInfo);
 
+      newUser = users.filter(user => user.id === userInfo.id);
+
       // send back updated users
-      res.status(201).json({ success: true, users });
+      res.status(201).json(newUser[0]);
     }
   } catch (error) {
     res.status(500).json({
